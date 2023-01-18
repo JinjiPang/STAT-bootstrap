@@ -51,3 +51,26 @@ and half challenged.
 This is the code to generate the ROC graph (Figure.1) for real data analysis.
 
 
+
+
+---------------------------------------------------------------
+> sessionInfo()
+R version 4.2.2 (2022-10-31)
+Platform: aarch64-apple-darwin20 (64-bit)
+Running under: macOS Monterey 12.5
+
+Matrix products: default
+LAPACK: /Library/Frameworks/R.framework/Versions/4.2-arm64/Resources/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] parallel  stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] here_1.0.1      pROC_1.18.0     lme4_1.1-31     Matrix_1.5-1    boot_1.3-28     forcats_0.5.2  
+ [7] stringr_1.4.1   dplyr_1.0.10    purrr_0.3.5     readr_2.1.3     tidyr_1.2.1     tibble_3.1.8   
+[13] ggplot2_3.4.0   tidyverse_1.3.2
+
+

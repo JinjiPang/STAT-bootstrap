@@ -6,11 +6,16 @@ library(boot)
 library(lme4)
 library(pROC)
 library(parallel)
+library(here)
 
 ######################################################################
 
 ## 1.Read in data
-dfroc<-read.csv("../data/ROC.csv")
+
+##please set STAT-bootstrap as working directory if using 
+##dfroc<-read.csv("../data/ROC.csv")
+
+dfroc<-read.csv(here("data","ROC.csv"))
 dfroc$Pig.ID<-as.character(dfroc$Pig.ID)
 dfroc$Exposed<-as.factor(dfroc$Exposed)
 
