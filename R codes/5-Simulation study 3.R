@@ -4,7 +4,7 @@ Exposed = c(rep(c(0,0,0,1,1,1), 100))
 
 set.seed(2022)
 
-simda1 <- lapply(1:2000, function(i) {
+sim3data1 <- lapply(1:2000, function(i) {
 
   data_sim <- data.frame(Exposed = Exposed,
                          wvELISA = -0.05636 + 1.38728*Exposed + rep(rnorm(100, 0, sd = 0.4879), each = 6) + rnorm(600, 0, sd = 0.5419),
@@ -12,7 +12,7 @@ simda1 <- lapply(1:2000, function(i) {
 
 })
 
-simda2 <- lapply(1:2000, function(i) {
+sim3data2<- lapply(1:2000, function(i) {
 
   data_sim <- data.frame(Exposed = Exposed,
                          wvELISA = -0.05636 + 0.69364*Exposed + rep(rnorm(100, 0, sd = 0.4879), each = 6) + rnorm(600, 0, sd = 0.5419),
@@ -20,7 +20,7 @@ simda2 <- lapply(1:2000, function(i) {
 
 })
 
-simda3 <- lapply(1:2000, function(i) {
+sim3data3 <- lapply(1:2000, function(i) {
 
   data_sim <- data.frame(Exposed = Exposed,
                          wvELISA = -0.05636 + 1.38728*Exposed + rep(rnorm(100, 0, sd = 0.1), each = 6) + rnorm(600, 0, sd = 0.7222),
@@ -28,7 +28,7 @@ simda3 <- lapply(1:2000, function(i) {
 
 })
 
-simda4 <- lapply(1:2000, function(i) {
+sim3data4 <- lapply(1:2000, function(i) {
 
   data_sim <- data.frame(Exposed = Exposed,
                          wvELISA = -0.05636 + 0.69364*Exposed + rep(rnorm(100, 0, sd = 0.1), each = 6) + rnorm(600, 0, sd = 0.7222),
@@ -36,7 +36,7 @@ simda4 <- lapply(1:2000, function(i) {
 
 })
 
-simda5 <- lapply(1:2000, function(i) {
+sim3data5 <- lapply(1:2000, function(i) {
 
   data_sim <- data.frame(Exposed = Exposed,
                          wvELISA = -0.05636 + 1.38728*Exposed + rep(rnorm(100, 0, sd = 0.7222), each = 6) + rnorm(600, 0, sd = 0.1),
@@ -44,7 +44,7 @@ simda5 <- lapply(1:2000, function(i) {
 
 })
 
-simda6 <- lapply(1:2000, function(i) {
+sim3data6 <- lapply(1:2000, function(i) {
 
   data_sim <- data.frame(Exposed = Exposed,
                          wvELISA = -0.05636 + 0.69364*Exposed + rep(rnorm(100, 0, sd = 0.7222), each = 6) + rnorm(600, 0, sd = 0.1),
@@ -53,12 +53,13 @@ simda6 <- lapply(1:2000, function(i) {
 })
 
 
+##########################################################
 
-## simulation parameter 1 +method1(pROC package)
+##simulation parameter 1 +method1(pROC package)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda1[[i]]
+  data_sim <- sim3data1[[i]]
 
   roc<-roc(Exposed~wvELISA,data=data_sim)
   # calculate 95% confidence interval for AUC here
@@ -84,12 +85,11 @@ print(resultda1$ci_width/2000)
 # [1] 0.04437621
 
 
-##########################
 ## simulation parameter 1 +method1(our code)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda1[[i]]
+  data_sim <- sim3data1[[i]]
 
   # calculate 95% confidence interval for AUC here
   ci <-calc_ci_95one(data_sim)
@@ -112,13 +112,12 @@ print(resultda11$ci_width/2000)
 # > print(resultda11$ci_width/2000)
 # [1] 0.04445861
 
-
-#####simulation parameter1 +method 2
+##simulation parameter1 +method 2
 
 cover_mc <- mclapply(1:2000, function(i) {
 
 
-  data_sim <- simda1[[i]]
+  data_sim <- sim3data1[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -149,13 +148,12 @@ print(resultda2$ci_width/2000)
 # [1] 0.04388297
 
 
-#########################
 
-# parameter1+method3
+##parameter1+method3
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda1[[i]]
+  data_sim <- sim3data1[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -183,15 +181,12 @@ print(resultda3$ci_width/2000)
 # [1] 0.05984367
 
 
+##########################################################
 
-
-########################
-
-
-#####parameter 2+method1(pROC code)
+##parameter 2+method1(pROC code)
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda2[[i]]
+  data_sim <- sim3data2[[i]]
 
   roc<-roc(Exposed~wvELISA,data=data_sim)
 
@@ -217,11 +212,11 @@ print(resultda21$ci_width/2000)
 # > print(resultda21$ci_width/2000)
 # [1] 0.07666161
 
-######## simulation parameter 2+method 1(our code)
+## simulation parameter 2+method 1(our code)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda2[[i]]
+  data_sim <- sim3data2[[i]]
 
   # calculate 95% confidence interval for AUC here
   ci <-calc_ci_95one(data_sim)
@@ -245,11 +240,11 @@ print(resultda211$ci_width/2000)
 # [1] 0.07672546
 
 
-#####simulation parameter 2 +method2
+##simulation parameter 2 +method2
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda2[[i]]
+  data_sim <- sim3data2[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -279,13 +274,11 @@ print(resultda22$ci_width/2000)
 # > print(resultda22$ci_width/2000)
 # [1] 0.06431699
 
-
-#####simulation parameter 2 + method3
-
+##simulation parameter 2 + method3
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda2[[i]]
+  data_sim <- sim3data2[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -319,13 +312,13 @@ print(resultda23$ci_width/2000)
 
 
 
+##########################################################
 
-############################
-#simulation parameter 3 +method1(pROC)
+##simulation parameter 3 +method1(pROC)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda3[[i]]
+  data_sim <- sim3data3[[i]]
 
   roc<-roc(Exposed~wvELISA,data=data_sim)
   # calculate 95% confidence interval for AUC here
@@ -351,12 +344,11 @@ print(resultda31$ci_width/2000)
 # > print(resultda31$ci_width/2000)
 # [1] 0.04457284
 
-######################## parameter3, method1(our code)
-
+## parameter3, method1(our code)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda3[[i]]
+  data_sim <- sim3data3[[i]]
 
   # calculate 95% confidence interval for AUC here
   ci <-calc_ci_95one(data_sim)
@@ -382,13 +374,11 @@ print(resultda311$ci_width/2000)
 # > print(resultda311$ci_width/2000)
 # [1] 0.04466207
 
-######################
-###parameter3 +method2
-
+##parameter3 +method2
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda3[[i]]
+  data_sim <- sim3data3[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -409,8 +399,6 @@ cover_mc <- mclapply(1:2000, function(i) {
 
 resultda32<-Reduce("+", cover_mc)
 
-# results divided by total simulation times will be the final results.
-
 print(resultda32$cover_p/2000)
 print(resultda32$ci_width/2000)
 
@@ -419,12 +407,12 @@ print(resultda32$ci_width/2000)
 # > print(resultda32$ci_width/2000)
 # [1] 0.04397448
 
-#############################
+
 ##parameter3 + method3
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda3[[i]]
+  data_sim <- sim3data3[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -451,14 +439,14 @@ print(resultda33$ci_width/2000)
 # [1] 0.06005985
 
 
-#######################
 
-#################
-#parameter4 +method1(pROC code)
+##########################################################
+
+##parameter4 +method1(pROC code)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda4[[i]]
+  data_sim <- sim3data4[[i]]
 
   roc<-roc(Exposed~wvELISA,data=data_sim)
   # calculate 95% confidence interval for AUC here
@@ -483,12 +471,11 @@ print(resultda41$ci_width/2000)
 # [1] 0.07667516
 
 
-###############parameter4, method1(our code)
-
+##parameter4, method1(our code)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda4[[i]]
+  data_sim <- sim3data4[[i]]
 
 
   # calculate 95% confidence interval for AUC here
@@ -513,12 +500,11 @@ print(resultda411$ci_width/2000)
 # [1] 0.07675031
 
 
-####################parameter 4+method2
-
+##parameter 4+method2
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda4[[i]]
+  data_sim <- sim3data4[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -539,8 +525,6 @@ cover_mc <- mclapply(1:2000, function(i) {
 
 resultda42<-Reduce("+", cover_mc)
 
-# results divided by total simulation times will be the final results.
-
 print(resultda42$cover_p/2000)
 print(resultda42$ci_width/2000)
 
@@ -551,13 +535,11 @@ print(resultda42$ci_width/2000)
 # [1] 0.07556902
 
 
-
-#############################
 ##parameter4 +method3
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda4[[i]]
+  data_sim <- sim3data4[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -585,16 +567,15 @@ print(resultda43$ci_width/2000)
 # > print(resultda43$ci_width/2000)
 # [1] 0.1031868
 
-##################
 
+##########################################################
 
-
-#simulation parameter5 +method1(pROC)
+##simulation parameter5 +method1(pROC)
 
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda5[[i]]
+  data_sim <- sim3data5[[i]]
 
   roc<-roc(Exposed~wvELISA,data=data_sim)
 
@@ -620,13 +601,11 @@ print(resultda51$ci_width/2000)
 # > print(resultda51$ci_width/2000)
 # [1] 0.04432985
 
-
-#####################parameter5, method1(our code)
-
+##parameter5, method1(our code)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda5[[i]]
+  data_sim <- sim3data5[[i]]
 
   # calculate 95% confidence interval for AUC here
   ci <-calc_ci_95one(data_sim)
@@ -651,14 +630,13 @@ print(resultda511$ci_width/2000)
 # > print(resultda511$ci_width/2000)
 # [1] 0.04436257
 
-##########################
 
-#####simulation parameter5 +method 2
+##simulation parameter5 +method 2
 
 cover_mc <- mclapply(1:2000, function(i) {
 
 
-  data_sim <- simda5[[i]]
+  data_sim <- sim3data5[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -685,13 +663,11 @@ print(resultda52$ci_width/2000)
 # [1] 0.05907415
 
 
-#########################
-
-# parameter 5 +method3
+##parameter 5 +method3
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda5[[i]]
+  data_sim <- sim3data5[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -717,11 +693,12 @@ print(resultda53$ci_width/2000)
 # > print(resultda53$ci_width/2000)
 # [1] 0.06990348
 
-###################################################################
-#####parameter6 +method1(pROC)
+##########################################################
+
+##parameter6 +method1(pROC)
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda6[[i]]
+  data_sim <- sim3data6[[i]]
 
   roc<-roc(Exposed~wvELISA,data=data_sim)
 
@@ -747,11 +724,11 @@ print(resultda61$ci_width/2000)
 # > print(resultda61$ci_width/2000)
 # [1] 0.07658191
 
-#####################parameter6, method1(our code)
+##parameter6, method1(our code)
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda6[[i]]
+  data_sim <- sim3data6[[i]]
 
 
   # calculate 95% confidence interval for AUC here
@@ -775,13 +752,11 @@ print(resultda611$ci_width/2000)
 # > print(resultda611$ci_width/2000)
 # [1] 0.07665263
 
-
-
-#####parameter6 +method2
+##parameter6 +method2
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda6[[i]]
+  data_sim <- sim3data6[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -810,12 +785,11 @@ print(resultda62$ci_width/2000)
 # > print(resultda62$ci_width/2000)
 # [1] 0.06324439
 
-#####parameter6 +method3
-
+##parameter6 +method3
 
 cover_mc <- mclapply(1:2000, function(i) {
 
-  data_sim <- simda6[[i]]
+  data_sim <- sim3data6[[i]]
 
   data_sim_list <- lapply(unique(data_sim$id), function(id) {
     data_sim[data_sim$id == id, ]
@@ -835,7 +809,6 @@ cover_mc <- mclapply(1:2000, function(i) {
 resultda63<-Reduce("+", cover_mc)
 
 print(resultda63$cover_p/2000)
-
 
 print(resultda63$ci_width/2000)
 

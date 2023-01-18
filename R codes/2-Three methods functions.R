@@ -3,7 +3,7 @@ library(tidyverse)
 library(pROC)
 
 
-##### function for method 1
+##### function for traditional bootstrap method
 compute_auc1 <- function(data, indices, formula) {
 
   return(roc(formula, data=data[indices, ],quiet = TRUE)$auc)
@@ -19,7 +19,7 @@ calc_ci_95one=function(data){
 }
 
 
-#### function for method 2
+#### function for cluster bootstrap method
 
 compute_auc2 <- function(data, indices, formula, data_all) {
   # id from bootstrap sampling
@@ -48,8 +48,7 @@ calc_ci_95two=function(data){
 }
 
 
-##### function for method 3
-
+##### function for hierarchical bootstrap method
 
 compute_auc3 <- function(data, indices, formula, data_all) {
   # id from bootstrap sampling

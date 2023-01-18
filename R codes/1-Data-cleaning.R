@@ -76,7 +76,7 @@ curve(dnorm(x, mean=1.33092, sd=0.729179), add = TRUE, col = 2)
 
 ######################################################################
 
-#parameters for two normal distributions, _n means negative population, _p means positive population
+##parameters for two normal distributions, _n means negative population, _p means positive population
 mean_n <- -0.05636
 sd_n <- 0.729179
 mean_p<-1.33092
