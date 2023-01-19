@@ -15,10 +15,6 @@ Here we described three nonparametric bootstrap methods, which are the tradition
 Simulation analysis was demonstrated here. `Sim1data1` is the simulated dataset for simulation study 1 under parameters setting 1. We demonstrated how to performed the ROC analysis of `Sim1data1` by tho three bootstrap methods. Code was accommodated for both Mac OS and Windows/Linux systems.
 
 
-## 3-wvELISA graph
-
-This is the code to generate the ROC graph (Figure.1) for real data analysis.
-
 
 ---------------------------------------------------------------
 
