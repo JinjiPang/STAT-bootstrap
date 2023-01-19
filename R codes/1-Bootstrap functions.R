@@ -2,8 +2,9 @@ library(boot)
 library(tidyverse)
 library(pROC)
 
+##############################################################
 
-##### function for traditional bootstrap method
+### function for traditional bootstrap method
 compute_auc1 <- function(data, indices, formula) {
 
   return(roc(formula, data=data[indices, ],quiet = TRUE)$auc)
@@ -18,8 +19,9 @@ calc_ci_95one=function(data){
 
 }
 
+##############################################################
 
-#### function for cluster bootstrap method
+## function for cluster bootstrap method
 
 compute_auc2 <- function(data, indices, formula, data_all) {
   # id from bootstrap sampling
@@ -36,6 +38,8 @@ compute_auc2 <- function(data, indices, formula, data_all) {
   return(roc(formula, data=boot_data, quiet = TRUE)$auc)
 }
 
+
+
 calc_ci_95two=function(data){
 
   pig_id <- 1:length(data) # this data is list! unique(data$id)
@@ -47,8 +51,8 @@ calc_ci_95two=function(data){
 
 }
 
-
-##### function for hierarchical bootstrap method
+##############################################################
+## function for hierarchical bootstrap method
 
 compute_auc3 <- function(data, indices, formula, data_all) {
   # id from bootstrap sampling
@@ -69,6 +73,7 @@ compute_auc3 <- function(data, indices, formula, data_all) {
 
   return(roc(formula, data=boot_data, quiet=TRUE)$auc)
 }
+
 
 calc_ci_95three=function(data){
 
