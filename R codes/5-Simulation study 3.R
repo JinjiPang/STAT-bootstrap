@@ -54,7 +54,12 @@ sim3data6 <- lapply(1:2000, function(i) {
 
 
 ##########################################################
+cores=detectCores()
 
+# because we are using `parallel`  processing to minimize the running time, 
+# cores[1]=24
+# here we used maximum (cores -1)=23 to do the simulation
+# change mc.cores = cores[1]-1 to accommodate your working machine. 
 ##simulation parameter 1 +method1(pROC package)
 
 cover_mc <- mclapply(1:2000, function(i) {

@@ -51,9 +51,15 @@ and half challenged.
 This is the code to generate the ROC graph (Figure.1) for real data analysis.
 
 
+## 7-Simulation study 3-window
+
+This file contains codes for simulation analysis using Linux/Windows machines. Here we used simulation study 3 as an example. The major difference is to use `foreach` rather than `mcapply` for parallel processing.
 
 
 ---------------------------------------------------------------
+
+Software and R packages versions are listed here for better reproducibility.
+
 > sessionInfo()
 R version 4.2.2 (2022-10-31)
 Platform: aarch64-apple-darwin20 (64-bit)

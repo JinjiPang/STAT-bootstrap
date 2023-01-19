@@ -60,6 +60,9 @@ sim3data6 <- lapply(1:2000, function(i) {
 
 })
 
+##############################################################
+
+## Here we used `foreach` function for Linux or Windows operation systems.
 
 ## simulation parameter 1 +method1(pROC package)
 

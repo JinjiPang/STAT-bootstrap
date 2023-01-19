@@ -1,5 +1,9 @@
 library(boot)
 library(pROC)
+library(parallel)
+
+
+
 
 Exposed = c(rep(0, 6*40), rep(c(0, rep(1, 5)), 60))
 
@@ -57,6 +61,13 @@ sim1data6 <- lapply(1:2000, function(i) {
 
 
 ############################################
+cores=detectCores()
+
+# because we are using `parallel`  processing to minimize the running time, 
+# cores[1]=24
+# here we used maximum (cores -1)=23 to do the simulation
+# change mc.cores = cores[1]-1 to accommodate your working machine. 
+
 
 ##simulation parameter1+method1(pROC package)
 
@@ -74,7 +85,7 @@ cover_mc <- mclapply(1:2000, function(i) {
 
   )
 
-}, mc.cores = 23)
+}, mc.cores = cores[1]-1)
 
 result11<-Reduce("+", cover_mc)
 
@@ -127,7 +138,7 @@ cover_mc <- mclapply(1:2000, function(i) {
 
   )
 
-}, mc.cores = cores[1] - 1)
+}, mc.cores = 23)
 
 result12<-Reduce("+", cover_mc)
 
@@ -153,7 +164,7 @@ cover_mc <- mclapply(1:2000, function(i) {
 
   )
 
-}, mc.cores = cores[1] - 1)
+}, mc.cores = 23)
 
 result13<-Reduce("+", cover_mc)
 
