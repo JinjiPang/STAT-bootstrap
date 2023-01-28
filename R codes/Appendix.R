@@ -36,12 +36,12 @@ compute_auc3 <- function(data, indices, formula, data_all) {
   #
   boot_data_list <- lapply(selected_id, function(id) {
 
-    data_selected_pig <- data_all[[id]]
+    data_selected_subject <- data_all[[id]]
     # re-sample
-    re_idx = sample(1:nrow(data_selected_pig), size = nrow(data_selected_pig),
+    re_idx = sample(1:nrow(data_selected_subject), size = nrow(data_selected_subject),
                     replace = TRUE)
 
-    data_selected_pig[re_idx, ]
+    data_selected_subject[re_idx, ]
   })
 
   # get all data with selected id
