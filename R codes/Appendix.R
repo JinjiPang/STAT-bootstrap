@@ -3,11 +3,16 @@ require(boot)
 require(pROC)
 
 
+##################################################################
+
+## Traditional bootstrap method
 compute_auc1 <- function(data, indices, formula) {
 
   return(roc(formula, data=data[indices, ],quiet = TRUE)$auc)
 }
 
+
+## Cluster bootstrap method
 compute_auc2 <- function(data, indices, formula, data_all) {
   # id from bootstrap sampling
   selected_id <- data[indices]
@@ -23,6 +28,8 @@ compute_auc2 <- function(data, indices, formula, data_all) {
   return(roc(formula, data=boot_data, quiet = TRUE)$auc)
 }
 
+
+## Hierarchical bootstrap method
 compute_auc3 <- function(data, indices, formula, data_all) {
   # id from bootstrap sampling
   selected_id <- data[indices]
@@ -43,7 +50,14 @@ compute_auc3 <- function(data, indices, formula, data_all) {
   return(roc(formula, data=boot_data, quiet=TRUE)$auc)
 }
 
-##########
+##################################################################
+
+## `calc_ci` is a function that can give 95% CI of AUC
+## `data` is a matrix or data.frame containing the variables in the formula 
+## `id` is the subject
+## `formula` is a formula of the type response~predictor
+## `method` the method to use, either “traditional”, “cluster” or “hierarchical”. 
+## `R` is the number of bootstrap replicates or permutations, default is 1000
 
 calc_ci <- function(data, id, formula, method, R = 1000) {
 
@@ -85,7 +99,6 @@ calc_ci <- function(data, id, formula, method, R = 1000) {
 # simulated data
 Challenge_status = c(rep(0, 6*40), rep(c(0, rep(1, 5)), 60))
 
-
 data_roc <- data.frame(Exposed = Challenge_status,
                        wvELISA = -0.05636 + 1.38728*Challenge_status + rep(rnorm(100, 0, sd = 0.4879), each = 6) + rnorm(600, 0, sd = 0.5419),
                        subject = rep(1:100, each = 6))
@@ -94,7 +107,7 @@ data_roc <- data.frame(Exposed = Challenge_status,
 # compute 95% ...
 
 # traditional
+result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "traditional" ,R=1000 ); result
 result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "cluster" ,R=1000 ); result
 result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "hierarchical" ,R=1000 ); result
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "traditional" ,R=1000 ); result
 result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "xxx" ,R=1000 ); result

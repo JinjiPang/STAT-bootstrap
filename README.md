@@ -1,19 +1,13 @@
 ## Nonparametric bootstrap methods for interval estimation of the area under the ROC curve for correlated diagnostic test data
 
-This repository is a repository about the extended information for paper in Preventive Veterinary Medicine "Nonparametric bootstrap methods for interval estimation of the area under the ROC curve for correlated diagnostic test data". It mainly contains code for real data analysis, three nonparametric bootstrap methods descriptions, and simulation studies.
+This repository is a repository about the extended information for paper in Preventive Veterinary Medicine "Nonparametric bootstrap methods for interval estimation of the area under the ROC curve for correlated diagnostic test data". It mainly contains code for `calc_ci` function which can calculate 95% CI of AUC given a data, subject, and specified formula.
 
 
 ----------------------------------------
 
-## 1-Bootstrap functions
+## Appendix
 
-Here we described three nonparametric bootstrap methods, which are the traditional bootstrap, cluster bootstrap, and hierarchical bootstrap.
-
-
-## 2-Simulation
-
-Simulation analysis was demonstrated here. `Sim1data1` is the simulated dataset for simulation study 1 under parameters setting 1. We demonstrated how to performed the ROC analysis of `Sim1data1` by tho three bootstrap methods. Code was accommodated for both Mac OS and Windows/Linux systems.
-
+Here we described three nonparametric bootstrap methods, which are the traditional bootstrap, cluster bootstrap, and hierarchical bootstrap. By combining these three functions, we created a single function `calc_ci` which can calculate 95 % CI of AUC using three bootstrap methods.
 
 
 ---------------------------------------------------------------
