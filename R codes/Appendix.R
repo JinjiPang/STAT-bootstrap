@@ -54,7 +54,7 @@ compute_auc3 <- function(data, indices, formula, data_all) {
 
 ## `calc_ci` is a function that can give 95% CI of AUC
 ## `data` is a matrix or data.frame containing the variables in the formula 
-## `id` is the subject
+## `id` is the subject that brings subject-level random effect
 ## `formula` is a formula of the type response~predictor
 ## `method` the method to use, either “traditional”, “cluster” or “hierarchical”. 
 ## `R` is the number of bootstrap replicates or permutations, default is 1000
