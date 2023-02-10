@@ -7,7 +7,7 @@ This repository is a repository about the extended information for paper in Prev
 
 ## Appendix
 
-Here we described two nonparametric bootstrap methods, which are the cluster bootstrap and hierarchical bootstrap. By combining these two functions, we created a single function `calc_ci` which can calculate confidence interval of AUC using three bootstrap methods.
+Here we described two nonparametric bootstrap methods, which are the cluster bootstrap and hierarchical bootstrap. By combining these two functions, we created a single function `calc_ci` which can calculate point estimate and confidence interval of AUC using two bootstrap methods.
 
 
 ---------------------------------------------------------------
