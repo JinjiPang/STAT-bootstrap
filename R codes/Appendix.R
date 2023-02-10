@@ -5,12 +5,6 @@ require(pROC)
 
 ##################################################################
 
-## Traditional bootstrap method
-compute_auc1 <- function(data, indices, formula) {
-
-  return(roc(formula, data=data[indices, ],quiet = TRUE)$auc)
-}
-
 
 ## Cluster bootstrap method
 compute_auc2 <- function(data, indices, formula, data_all) {
@@ -52,20 +46,17 @@ compute_auc3 <- function(data, indices, formula, data_all) {
 
 ##################################################################
 
-## `calc_ci` is a function that can give 95% CI of AUC
+## `calc_ci` is a function that can give confidence interval of AUC
 ## `data` is a matrix or data.frame containing the variables in the formula 
 ## `id` is the subject that brings subject-level random effect
 ## `formula` is a formula of the type response~predictor
-## `method` the method to use, either “traditional”, “cluster” or “hierarchical”. 
-## `R` is the number of bootstrap replicates or permutations, default is 1000
+## `method` the method to use, either “cluster” or “hierarchical”
+## `resample` is the number of bootstrap replicates or permutations, default is 1000
+## `conf.level` is the confidence level for AUC, default is 0.95
 
-calc_ci <- function(data, id, formula, method, R = 1000) {
+calc_ci <- function(data, id, formula, method="cluster", resample=1000, conf.level=0.95) {
 
-  if (method == "traditional") {
-    result_boot <- boot(data = data, statistic = compute_auc1,
-                        R = R, formula = formula)
-
-  } else if (method == 'cluster') {
+    if (method == 'cluster') {
 
     subject_id <- unique(data[, id])
 
@@ -74,7 +65,7 @@ calc_ci <- function(data, id, formula, method, R = 1000) {
     })
 
     result_boot <- boot(data = subject_id, statistic = compute_auc2,
-                        R = R, formula = formula, data_all = data_sim_list)
+                        R = resample, formula = formula, data_all = data_sim_list)
 
   } else if (method == 'hierarchical') {
 
@@ -85,18 +76,28 @@ calc_ci <- function(data, id, formula, method, R = 1000) {
     })
 
     result_boot <- boot(data = subject_id, statistic = compute_auc3,
-                        R = R, formula = formula, data_all = data_sim_list)
+                        R = resample, formula = formula, data_all = data_sim_list)
 
   } else {
     stop("The specified method does not exist. Please use one of these: traditional, cluster, hierarchical.")
   }
 
-  ci <- quantile(result_boot$t[,1], c(0.025, 0.975))
-  return(ci)
+  ci <- quantile(result_boot$t[,1], c((1-conf.level)/2,((1-conf.level)/2+conf.level)))
+  return(
+    
+    result<-list(
+      point_estimate= mean(result_boot$t[,1]),
+      CI=ci,
+      confidence_level=conf.level,
+      resample=resample,
+      method= method
+  
+    ))
 
 }
 
-# simulated data
+
+# simulated data to demonstrate calc_ci function
 Challenge_status = c(rep(0, 6*40), rep(c(0, rep(1, 5)), 60))
 
 data_roc <- data.frame(Exposed = Challenge_status,
@@ -106,8 +107,20 @@ data_roc <- data.frame(Exposed = Challenge_status,
 
 # compute 95% ...
 
-# traditional
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "traditional" ,R=1000 ); result
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "cluster" ,R=1000 ); result
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "hierarchical" ,R=1000 ); result
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA,method = "xxx" ,R=1000 ); result
+# cluster(default) method
+
+result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA); result
+
+result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "cluster", resample=1000, conf.level=0.95 ); result
+
+result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "cluster", resample=2000, conf.level=0.90 ); result
+
+
+# hierarchical method
+
+result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "hierarchical", resample =1000 ); result
+
+result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "hierarchical", resample=2000, conf.level=0.90); result
+
+
+
