@@ -97,7 +97,10 @@ calc_ci <- function(data, id, formula, method="cluster", resample=1000, conf.lev
 }
 
 
-# simulated data to demonstrate calc_ci function
+# analysis of a simulated data to demonstrate calc_ci function
+
+set.seed(20230228)
+
 Challenge_status = c(rep(0, 6*40), rep(c(0, rep(1, 5)), 60))
 
 data_roc <- data.frame(Exposed = Challenge_status,
@@ -105,22 +108,17 @@ data_roc <- data.frame(Exposed = Challenge_status,
                        subject = rep(1:100, each = 6))
 
 
-# compute 95% ...
-
 # cluster(default) method
 
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA); result
+AUC_cluster<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "cluster", resample=1000, conf.level=0.95 )
 
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "cluster", resample=1000, conf.level=0.95 ); result
+AUC_cluster
 
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "cluster", resample=2000, conf.level=0.90 ); result
 
 
 # hierarchical method
 
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "hierarchical", resample =1000 ); result
+AUC_hierarchical<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "hierarchical", resample=2000, conf.level=0.90)
 
-result<-calc_ci(data=data_roc, id="subject",formula = Exposed~ wvELISA, method = "hierarchical", resample=2000, conf.level=0.90); result
-
-
+AUC_hierarchical
 
