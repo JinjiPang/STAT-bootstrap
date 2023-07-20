@@ -1,6 +1,6 @@
-## Nonparametric bootstrap methods for interval estimation of the area under the ROC curve for correlated diagnostic test data
+## Nonparametric bootstrap methods for interval estimation of the area under the ROC curve for correlated diagnostic test data: application to whole-virus ELISA testing in swine
 
-This repository is a repository about the extended information for paper in Preventive Veterinary Medicine "Nonparametric bootstrap methods for interval estimation of the area under the ROC curve for correlated diagnostic test data". It mainly contains code for `calc_ci` function which can calculate point estimate and confidence interval of AUC given a data, subject, specified formula, specified bootstrap method, specified bootstrap replicates, and specified confidence level .
+This repository is a repository about the extended information for paper in Frontiers Veterinary Science "Nonparametric bootstrap methods for interval estimation of the area under the ROC curve for correlated diagnostic test data: application to whole-virus ELISA testing in swine". It mainly contains code for `calc_ci` function which can calculate point estimate and confidence interval of AUC given a data, subject, specified formula, specified bootstrap method, specified bootstrap replicates, and specified confidence level .
 
 
 ----------------------------------------
